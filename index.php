@@ -27,7 +27,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="cadastro.php">Cadastrar</a>
-              <a class="dropdown-item" href="#">Buscar</a>
+              <a class="dropdown-item" href="listagem.php">Listar</a>
               <a class="dropdown-item" href="#">Atualizar</a>
               <a class="dropdown-item" href="#">Deletar</a>
             </div>

@@ -41,13 +41,16 @@
 
                     if ($stmt->execute()) {
                         if ($stmt->rowCount() > 0) {
-
+                            //header("Refresh: 20; url = cadastro.php");
                             //echo "Dados cadastrados com sucesso!";
+                            echo  "<div class='alert alert-success' role='alert'>";
+                            echo  "Dados cadastrados com sucesso!";
+                            echo  "</div>";
                             $id = null;
                             $nome = null;
                             $descricao = null;
                             $preco = null;
-                            //header("Refresh: 20; url = index.php");
+
                         } else {
                             echo "Erro ao tentar efetivar cadastro";
                         }
@@ -79,7 +82,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="cadastro.php">Cadastrar</a>
-              <a class="dropdown-item" href="#">Buscar</a>
+              <a class="dropdown-item" href="listagem.php">Listagem</a>
               <a class="dropdown-item" href="#">Atualizar</a>
               <a class="dropdown-item" href="#">Deletar</a>
             </div>
