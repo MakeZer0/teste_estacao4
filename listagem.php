@@ -32,6 +32,70 @@
       } catch (PDOException $ex) {
           echo 'Error: ' . $ex->getMessage();
       }
+
+      if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
+          try {
+              $stmt = $con->prepare("SELECT id,nome,descricao,preco FROM produtos WHERE id = ?");
+              $stmt->bindParam(1, $id, PDO::PARAM_INT);
+              if ($stmt->execute()) {
+                  $rs = $stmt->fetch(PDO::FETCH_OBJ);
+                  $id = $rs->id;
+                  $nome = $rs->nome;
+                  $descricao = $rs->descricao;
+                  $preco = $rs->preco;
+              } else {
+                  throw new PDOException("Erro: Não foi possível executar a declaração sql");
+              }
+          } catch (PDOException $erro) {
+              echo "Erro: ".$erro->getMessage();
+          }
+      }
+      if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != "") {
+          try {
+              $stmt = $con->prepare("UPDATE produtos SET nome=?, descricao=?, preco=? WHERE id = ?");
+              $stmt->bindParam(1, $nome);
+              $stmt->bindParam(2, $descricao);
+              $stmt->bindParam(3, $preco);
+              $stmt->bindParam(4, $id);
+
+              if ($stmt->execute()) {
+                  if ($stmt->rowCount() > 0) {
+                      echo  "<div class='alert alert-success' role='alert'>";
+                      echo  "Dados atualizados com sucesso!";
+                      echo  "</div>";
+                      $id = null;
+                      $nome = null;
+                      $email = null;
+                      $celular = null;
+                  } else {
+                      echo "Erro ao tentar efetivar cadastro";
+                  }
+              } else {
+                  throw new PDOException("Erro: Não foi possível executar a declaração sql");
+              }
+
+          } catch (PDOException $erro) {
+              echo "Erro: " . $erro->getMessage();
+          }
+      }
+
+      if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
+          try {
+              $stmt = $con->prepare("DELETE FROM produtos WHERE id = ?");
+              $stmt->bindParam(1, $id, PDO::PARAM_INT);
+              if ($stmt->execute()) {
+                  echo  "<div class='alert alert-success' role='alert'>";
+                  echo  "Produto excluído com sucesso!";
+                  echo  "</div>";
+                  $id = null;
+              } else {
+                  throw new PDOException("Erro: Não foi possível executar a declaração sql");
+              }
+          } catch (PDOException $erro) {
+              echo "Erro: ".$erro->getMessage();
+          }
+      }
+
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -59,39 +123,89 @@
         </ul>
       </div>
     </nav>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">NOME</th>
-          <th scope="col">DESCRIÇÃO</th>
-          <th scope="col">PREÇO</th>
-        </tr>
-      </thead>
-        <?php
-        // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
-        try {
-            $stmt = $con->prepare("SELECT id,nome,descricao,preco FROM produtos ORDER BY nome ASC");
-                if ($stmt->execute()) {
-                    while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-                        echo "<tbody>";
-                        echo "<tr>";
-                        echo "<th>".$rs->id."</th><th>".$rs->nome."</th><th>".$rs->descricao."</th><th>".$rs->preco
-                                   ."</th><th><center><a href='cadastro.php'>[Alterar]</a>"
-                                   ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                   ."<a href=\"\">[Excluir]</a></center></th>";
-                        echo "</tr>";
-                        echo "</tbody>";
+    Olá
+    <table class="table table-bordered">
+      <tr>
+        <th>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">NOME</th>
+              <th scope="col">DESCRIÇÃO</th>
+              <th scope="col">PREÇO</th>
+            </tr>
+          </thead>
+            <?php
+            // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
+            try {
+                $stmt = $con->prepare("SELECT id,nome,descricao,preco FROM produtos ORDER BY nome ASC");
+                    if ($stmt->execute()) {
+                        while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+                            echo "<tbody>";
+                            echo "<tr>";
+                            echo "<th>".$rs->id."</th><th>".$rs->nome."</th><th>".$rs->descricao."</th><th>".$rs->preco
+                                       ."</th><th><center><a href='?act=upd&id=" . $rs->id . "'><button type='button' class='btn btn-info'>Atualizar</button></a>"
+                                       ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                       ."<a href=\"?act=del&id=" . $rs->id . "\"><button type='button' class='btn btn-danger'>Excluir</button></a></center></th>";
+                            echo "</tr>";
+                            echo "</tbody>";
+                        }
+                    } else {
+                        echo "Erro: Não foi possível recuperar os dados do banco de dados";
                     }
-                } else {
-                    echo "Erro: Não foi possível recuperar os dados do banco de dados";
+            } catch (PDOException $erro) {
+                echo "Erro: ".$erro->getMessage();
+            }
+            ?>
+        </table>
+        </th>
+        <th style="width:30%; vertical-align: top;">
+          <form action="?act=save" method="POST" name="form1">
+          <input type="hidden" name="id" <?php
+            // Preenche o id no campo id com um valor "value"
+            if (isset($id) && $id != null || $id != "") {
+                echo "value=\"{$id}\"";
+            }
+            ?> />
+          <div class="form-group row">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+              <input type="descricao" class="form-control form-control-label" id="colFormLabel1" name="nome" <?php
+                // Preenche o nome no campo nome com um valor "value"
+                if (isset($nome) && $nome != null || $nome != ""){
+                    echo "value=\"{$nome}\"";
                 }
-        } catch (PDOException $erro) {
-            echo "Erro: ".$erro->getMessage();
-        }
-        ?>
+                ?>>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">Descrição</label>
+            <div class="col-sm-10">
+              <input type="descricao" class="form-control" id="colFormLabel2" name="descricao" <?php
+                // Preenche o descricao no campo descricao com um valor "value"
+                if (isset($descricao) && $descricao != null || $descricao != ""){
+                    echo "value=\"{$descricao}\"";
+                }
+                ?> >
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">Preço</label>
+            <div class="col-sm-10">
+              <input type="descricao" class="form-control form-control-label" id="colFormLabel3" name="preco" <?php
+                // Preenche o preco no campo preco com um valor "value"
+                if (isset($preco) && $preco != null || $preco != ""){
+                    echo "value=\"{$preco}\"";
+                }
+                ?> >
+            </div>
+          </div>
+          <center><button type="submit" class="btn btn-primary">Atualizar</button></center>
+        </form>
+        </th>
+      </tr>
     </table>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
