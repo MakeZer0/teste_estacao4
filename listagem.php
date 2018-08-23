@@ -6,7 +6,7 @@
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/mystyle.css">
     <title>Cadastro de Produtos</title>
   </head>
   <body>
@@ -123,8 +123,16 @@
         </ul>
       </div>
     </nav>
-    Olá
+    <p>Utilize a tabela abaixo para alterar e excluir os produtos cadastrados no sistema.</p>
     <table class="table table-bordered">
+      <tr>
+        <th>
+          <label> Listagem de Produtos</label>
+        </th>
+        <th>
+          <label> Dados do Produto</label>
+        </th>
+      </tr>
       <tr>
         <th>
           <table class="table">
