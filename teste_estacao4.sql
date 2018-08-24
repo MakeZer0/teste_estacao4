@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Ago-2018 às 04:18
+-- Generation Time: 24-Ago-2018 às 04:33
 -- Versão do servidor: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -19,8 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_produtos`
+-- Database: `teste_estacao4`
 --
+CREATE DATABASE IF NOT EXISTS `teste_estacao4` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `teste_estacao4`;
 
 -- --------------------------------------------------------
 
@@ -34,12 +36,6 @@ CREATE TABLE `produtos` (
   `DESCRICAO` varchar(255) NOT NULL,
   `PRECO` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `produtos`
---
-
-
 
 --
 -- Indexes for dumped tables
@@ -59,7 +55,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT for table `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

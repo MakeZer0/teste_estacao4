@@ -25,7 +25,7 @@
         $preco = NULL;
     }
       try {
-          $con = new PDO("mysql:host=localhost;dbname=db_produtos","root","");
+          $con = new PDO("mysql:host=localhost;dbname=teste_estacao4","root","");
           $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           $con->exec("set names utf8");
 
