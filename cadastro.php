@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/mystyle.css">
-    <title>Controle de Produtos</title>
+    <title>Cadastro de Produtos</title>
   </head>
   <body>
 
@@ -32,7 +32,7 @@
                 echo 'Error: ' . $ex->getMessage();
             }
 
-            if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != "") {
+            if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != "" && $preco != "") {
                 try {
                     $stmt = $con->prepare("INSERT INTO produtos (nome, descricao, preco) VALUES (?, ?, ?)");
                     $stmt->bindParam(1, $nome);
@@ -66,7 +66,6 @@
         ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Produtos</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -74,26 +73,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.php">Menu <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index.php">Página Inicial <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Opções
+              Gerenciar Produtos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="cadastro.php">Cadastrar</a>
+              <a class="dropdown-item" href="cadastro.php">Inserir</a>
               <a class="dropdown-item" href="listagem.php">Listagem</a>
-              <a class="dropdown-item" href="#">Atualizar</a>
-              <a class="dropdown-item" href="#">Deletar</a>
             </div>
           </li>
         </ul>
       </div>
     </nav>
     <div id="area">
+      <p class="titulo_c">INSERIR PRODUTO</p>
       <p id="p2">Utilize o formulário abaixo para adicionar um novo produto ao sistema.</p>
       <form action="?act=save" method="POST" name="form1">
-        <input type="hidden" name="id" <?php
+        <input type="hidden" required name="id" <?php
           // Preenche o id no campo id com um valor "value"
           if (isset($id) && $id != null || $id != "") {
               echo "value=\"{$id}\"";

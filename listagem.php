@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/mystyle.css">
-    <title>Cadastro de Produtos</title>
+    <title>Controle de Produtos</title>
   </head>
   <body>
 
@@ -65,8 +65,8 @@
                       echo  "</div>";
                       $id = null;
                       $nome = null;
-                      $email = null;
-                      $celular = null;
+                      $descricao = null;
+                      $preco = null;
                   } else {
                       echo "Erro ao tentar efetivar cadastro";
                   }
@@ -99,7 +99,6 @@
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Produtos</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -107,17 +106,15 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.php">Menu <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index.php">Página Inicial <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Opções
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="cadastro.php">Cadastrar</a>
-              <a class="dropdown-item" href="#">Buscar</a>
-              <a class="dropdown-item" href="#">Atualizar</a>
-              <a class="dropdown-item" href="#">Deletar</a>
+              <a class="dropdown-item" href="cadastro.php">Inserir</a>
+              <a class="dropdown-item" href="#">Listar</a>
             </div>
           </li>
         </ul>
@@ -126,12 +123,14 @@
     <p>Utilize a tabela abaixo para alterar e excluir os produtos cadastrados no sistema.</p>
     <table class="table table-bordered">
       <tr>
-        <th>
-          <label> Listagem de Produtos</label>
-        </th>
-        <th>
-          <label> Dados do Produto</label>
-        </th>
+        <td>
+          <p class="tbl_txt_top">LISTAGEM DE PRODUTOS</p>
+          <p class="tbl_txt_bot">Esta lista contém todos os produtos cadastrados.<br>Estão ordenados pelo nome do produto.</p>
+        </td>
+        <td>
+          <p class="tbl_txt_top">DADOS DO PRODUTO</p>
+          <p class="tbl_txt_bot">Clique para Atualizar um produto na tabela ao lado. As informações editáveis aparecerão aqui.</p>
+        </td>
       </tr>
       <tr>
         <th>
@@ -154,8 +153,8 @@
                             echo "<tr>";
                             echo "<th>".$rs->id."</th><th>".$rs->nome."</th><th>".$rs->descricao."</th><th>".$rs->preco
                                        ."</th><th><center><a href='?act=upd&id=" . $rs->id . "'><button type='button' class='btn btn-info'>Atualizar</button></a>"
-                                       ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                       ."<a href=\"?act=del&id=" . $rs->id . "\"><button type='button' class='btn btn-danger'>Excluir</button></a></center></th>";
+                                       ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                            echo "<a href='?act=del&id=" . $rs->id . "' data-confirm='Tem certeza que deseja excluir este produto?' class='btn btn-danger' >Excluir</a></center></th>";
                             echo "</tr>";
                             echo "</tbody>";
                         }
@@ -217,5 +216,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="js/personalizado.js"></script>
   </body>
 </html>
